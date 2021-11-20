@@ -57,6 +57,6 @@ Arena:
 
   Locations:
     LuckyBlocks:
-      - world 1 1 1
+      - common=world 1 1 1
     Players:
       - world 1 1 1

@@ -6,12 +6,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Player.ArenaPlayer;
+import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 import ua.Ldoin.JuicyLuckyWars.Main.Main;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.LocationUtil;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Arena {
 
@@ -31,10 +33,14 @@ public class Arena {
         for (String s : config.getStringList("Arena.Locations.Players"))
             spawnLocations.add(LocationUtil.getLocation(s));
 
+        for (String s : config.getStringList("Arena.Locations.LuckyBlocks"))
+            LuckyBlock.getLuckyBlockByName(s.split("=")[0]).placeBlock(Objects.requireNonNull(LocationUtil.getLocation(s.split("=")[1])));
+
         players = new ArrayList<>();
         spectators = new ArrayList<>();
 
-        storage = new LuckyBlockStorage();
+        luckyBlockStorage = new LuckyBlockStorage();
+        blockStorage = new BlockStorage();
 
         arena = this;
 
@@ -44,7 +50,7 @@ public class Arena {
 
     private final String map;
 
-    private boolean started;
+    private final boolean started;
 
     private final int minPlayers;
     private final int maxPlayers;
@@ -54,7 +60,8 @@ public class Arena {
     private final List<ArenaPlayer> players;
     private final List<Player> spectators;
 
-    private final LuckyBlockStorage storage;
+    private final LuckyBlockStorage luckyBlockStorage;
+    private final BlockStorage blockStorage;
 
     public String getMap() {
 
@@ -104,9 +111,15 @@ public class Arena {
 
     }
 
-    public LuckyBlockStorage getStorage() {
+    public LuckyBlockStorage getLuckyBlockStorage() {
 
-        return storage;
+        return luckyBlockStorage;
+
+    }
+
+    public BlockStorage getBlockStorage() {
+
+        return blockStorage;
 
     }
 
@@ -175,6 +188,9 @@ public class Arena {
             return;
 
         ArenaPlayer winner = players.get(0);
+
+        blockStorage.clear();
+        luckyBlockStorage.clear();
 
         new Arena();
 

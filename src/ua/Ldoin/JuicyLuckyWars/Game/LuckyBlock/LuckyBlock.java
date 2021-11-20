@@ -3,6 +3,8 @@ package ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
@@ -28,6 +30,8 @@ public class LuckyBlock {
 
         this.itemsAmount = itemsAmount;
         this.items = items;
+
+        display = new HashMap<>();
 
     }
 
@@ -130,6 +134,30 @@ public class LuckyBlock {
 
         for (ItemStack item : getRandomItems())
             location.getWorld().dropItem(location, item);
+
+    }
+
+    private final Map<Location, ArmorStand> display;
+
+    public void placeBlock(Location location) {
+
+        location.getBlock().setTypeIdAndData(95, (byte) data, false);
+
+        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+
+        stand.setBasePlate(false);
+        stand.setVisible(false);
+        stand.setGravity(false);
+
+        stand.setHelmet(getItemStack());
+
+        display.put(location, stand);
+
+    }
+
+    public void breakBlock(Location location) {
+
+        display.get(location).remove();
 
     }
 

@@ -50,8 +50,8 @@ public class LuckyBlockPlaceEvent extends JuicyEvent {
         if (Arena.arena == null)
             return;
 
-        Arena.arena.getStorage().remove(this.location);
-        Arena.arena.getStorage().add(location, luckyBlock);
+        Arena.arena.getLuckyBlockStorage().remove(this.location);
+        Arena.arena.getLuckyBlockStorage().add(location, luckyBlock);
 
         this.location = location;
 
@@ -62,8 +62,8 @@ public class LuckyBlockPlaceEvent extends JuicyEvent {
         if (Arena.arena == null)
             return;
 
-        Arena.arena.getStorage().remove(location);
-        Arena.arena.getStorage().add(location, luckyBlock);
+        Arena.arena.getLuckyBlockStorage().remove(location);
+        Arena.arena.getLuckyBlockStorage().add(location, luckyBlock);
 
         this.luckyBlock = luckyBlock;
 
