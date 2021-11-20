@@ -3,13 +3,14 @@ package ua.Ldoin.JuicyLuckyWars.Game.Arena;
 import org.bukkit.Location;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class LuckyBlockStorage {
 
-    public LuckyBlockStorage(Map<Location, LuckyBlock> luckyBlocks) {
+    public LuckyBlockStorage() {
 
-        this.luckyBlocks = luckyBlocks;
+        this.luckyBlocks = new HashMap<>();
 
     }
 
