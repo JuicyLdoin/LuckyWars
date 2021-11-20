@@ -2,7 +2,7 @@ package ua.Ldoin.JuicyLuckyWars.Config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import ua.Ldoin.JuicyLuckyWars.Config.Configurations.ItemsConfig;
+import ua.Ldoin.JuicyLuckyWars.Config.Configurations.*;
 import ua.Ldoin.JuicyLuckyWars.Main.Main;
 
 import java.io.File;
@@ -13,8 +13,10 @@ public class Configuration {
 
 
     private static Configuration items;
+    private static Configuration permissions;
 
     private static FileConfiguration itemsConfig;
+    private static FileConfiguration permissionsConfig;
 
     private final YamlConfiguration cfg;
 
@@ -68,7 +70,8 @@ public class Configuration {
 
     public enum ConfigurationType {
 
-        ITEMS(Configuration.itemsConfig, Configuration.items);
+        ITEMS(Configuration.itemsConfig, Configuration.items),
+        PERMISSIONS(Configuration.permissionsConfig, Configuration.permissions);
 
         private final Configuration file;
 
@@ -99,10 +102,12 @@ public class Configuration {
         public static void init() {
 
             Configuration.items = ConfigManager.getConfiguration(new ItemsConfig());
+            Configuration.permissions = ConfigManager.getConfiguration(new PermissionsConfig());
 
             Configuration.itemsConfig = Configuration.items.getConfig();
+            Configuration.permissionsConfig = Configuration.permissions.getConfig();
 
-            ConfigManager.registerConfigurations(new Configuration[] { Configuration.items });
+            ConfigManager.registerConfigurations(Configuration.items, Configuration.permissions);
 
             ConfigManager.initConfigs();
 
