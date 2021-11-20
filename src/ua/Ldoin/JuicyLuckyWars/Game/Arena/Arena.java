@@ -136,6 +136,12 @@ public class Arena {
 
     }
 
+    public void removePlayer(ArenaPlayer p) {
+
+        this.players.remove(p);
+
+    }
+
     public void addSpectator(Player p) {
 
         this.spectators.add(p);
@@ -177,13 +183,15 @@ public class Arena {
 
     }
 
-    public static void initDeathPlayer(final Player p) {
+    public static void initDeathPlayer(Player p) {
 
         for (PotionEffect effect : p.getActivePotionEffects())
             p.removePotionEffect(effect.getType());
 
         p.setHealth(p.getMaxHealth());
         p.setGameMode(GameMode.SPECTATOR);
+
+        p.teleport(p.getWorld().getSpawnLocation());
 
         p.sendTitle("§cВы умерли!", "");
 
@@ -223,6 +231,8 @@ public class Arena {
                 ArenaPlayer.players.put(player.getName(), new ArenaPlayer(player));
                 players.add(new ArenaPlayer(player));
 
+                initGamePlayer(player);
+
                 player.sendTitle("§aИгра началась!", "");
                 ScoreboardUpdater.setScoreboard(player, "game");
 
@@ -233,7 +243,11 @@ public class Arena {
 
     }
 
-    public void end() {
+    public void end(boolean disable) {
+
+        if (!disable)
+            if (players.size() > 1)
+                return;
 
         JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
         JuicyServerUpdater.stoped = true;

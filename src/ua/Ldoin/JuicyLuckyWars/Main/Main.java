@@ -9,6 +9,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
+import ua.Ldoin.JuicyLuckyWars.Game.Arena.Player.ArenaPlayer;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Timer;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
@@ -151,6 +152,11 @@ public class Main extends JavaPlugin {
                     .replace("%xp%", String.valueOf(p.getXP()))
                     .replace("%gold%", String.valueOf(p.getGold()))
                     .replace("%diamonds%", String.valueOf(p.getDiamonds()));
+
+        ArenaPlayer ap = ArenaPlayer.players.get(pl.getName());
+
+        if (ap != null)
+            str = str.replace("%kills%", String.valueOf(ap.getKills()));
 
         str = str.replace("&", "§");
 

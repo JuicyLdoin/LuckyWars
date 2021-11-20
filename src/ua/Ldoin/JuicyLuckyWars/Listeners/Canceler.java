@@ -70,13 +70,6 @@ public class Canceler implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onDeath(PlayerDeathEvent e) {
-
-        e.setKeepInventory(true);
-
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onTabComplete(TabCompleteEvent e) {
 

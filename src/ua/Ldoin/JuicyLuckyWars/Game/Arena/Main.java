@@ -19,6 +19,7 @@ public class Main {
 
         PluginManager p = Bukkit.getPluginManager();
 
+        p.registerEvents(new Death(), pl);
         p.registerEvents(new Join(), pl);
         p.registerEvents(new Quit(), pl);
         p.registerEvents(new Chat(), pl);
