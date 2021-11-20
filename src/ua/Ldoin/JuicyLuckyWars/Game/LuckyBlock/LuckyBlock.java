@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Main.Main;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class LuckyBlock {
 
-    public LuckyBlock(short data, String displayName, String head, int itemChance, int trapChance) {
+    public LuckyBlock(short data, String displayName, String head, int itemChance, int trapChance, List<LuckyBlockItem> items) {
 
         this.data = data;
         this.displayName = displayName;
@@ -22,6 +23,8 @@ public class LuckyBlock {
 
         this.itemChance = itemChance;
         this.trapChance = trapChance;
+
+        this.items = items;
 
     }
 
@@ -50,6 +53,8 @@ public class LuckyBlock {
     private final int itemChance;
     private final int trapChance;
 
+    private final List<LuckyBlockItem> items;
+
     public short getData() {
 
         return data;
@@ -77,6 +82,12 @@ public class LuckyBlock {
     public int getTrapChance() {
 
         return trapChance;
+
+    }
+
+    public List<LuckyBlockItem> getItems() {
+
+        return items;
 
     }
 
@@ -116,7 +127,13 @@ public class LuckyBlock {
             int itemChance = config.getInt("LuckyBlocks." + block + ".items.chance");
             int trapChance = config.getInt("LuckyBlocks." + block + ".trap.chance");
 
-            luckyBlocks.put(block, new LuckyBlock(data, displayName, head, itemChance, trapChance));
+            List<LuckyBlockItem> items = new ArrayList<>();
+
+            if (config.contains("LuckyBlocks." + block + ".items.list"))
+                for (String item : config.getStringList("LuckyBlocks." + block + ".items.list"))
+                    items.add(LuckyBlockItem.getItemByName(item));
+
+            luckyBlocks.put(block, new LuckyBlock(data, displayName, head, itemChance, trapChance, items));
 
         }
 
