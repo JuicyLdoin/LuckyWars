@@ -1,0 +1,13 @@
+groups:
+  player:
+    permissions: null
+    options:
+      default: true
+      prefix: '&7Игрок'
+      suffix: '&f'
+  Admin:
+    permissions: null
+    options:
+      default: false
+      prefix: '&cАдмин'
+      suffix: '&f'

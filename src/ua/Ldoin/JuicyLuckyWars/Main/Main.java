@@ -5,8 +5,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
+import ua.Ldoin.JuicyLuckyWars.Listeners.Canceler;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Listeners;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.SQL.MySQL;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
 
@@ -63,6 +66,15 @@ public class Main extends JavaPlugin {
 
         sendMessageToConsole(prefix + "&fPlugin Enabled!");
         sendMessageToConsole(prefix + "&f====================");
+
+    }
+
+    public void loadListeners() {
+
+        PluginManager p = Bukkit.getPluginManager();
+
+        p.registerEvents(new Canceler(), this);
+        p.registerEvents(new Listeners(), this);
 
     }
 

@@ -1,5 +1,15 @@
 prefix: '&eJuicyLuckyWars &f>> '
 
+MySQL:
+  Host: 127.0.0.1
+  Port: 3308
+  Username: root
+  Database: juicy
+  Password: ''
+
+JoinMessage: '%prefix%&fИгрок &e%player% &fприсоеденился к игре. До отсчёта осталось &e%playertostart% &fигроков.'
+QuitMessage: '%prefix%&fИгрок &e%player% &fпокинул игру. До отсчёта осталось &e%playertostart% &fигроков.'
+
 scoreboard:
   wait:
     title: '&e&lLuckyWars'
@@ -21,3 +31,15 @@ scoreboard:
       3: '❘ Убийства: &e%kills%'
       2: '❘ Лаки блоков: &e%blocks%'
       1: '❘ '
+
+Arena:
+  Name: Test
+
+  MinPlayers: 2
+  MaxPlayers: 8
+
+  TimeToStart: 30
+  TimeToEnd: 600
+
+  Spawns:
+    - 1 1 1
