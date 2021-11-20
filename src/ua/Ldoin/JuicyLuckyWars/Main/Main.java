@@ -62,6 +62,9 @@ public class Main extends JavaPlugin {
                 if (!(e instanceof Player))
                     e.remove();
 
+        loadListeners();
+        sendMessageToConsole(prefix + "&fListeners Loaded!");
+
         (new ScoreboardUpdater()).runTaskTimer(this, 0L, 5L);
 
         sendMessageToConsole(prefix + "&fPlugin Enabled!");
