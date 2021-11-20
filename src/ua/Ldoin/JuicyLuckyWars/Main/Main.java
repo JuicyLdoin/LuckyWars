@@ -7,12 +7,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.SQL.MySQL;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
 
 public class Main extends JavaPlugin {
 
     public static String prefix;
     public static Main plugin;
+
+    public static MySQL mysql;
 
     public void onLoad() {
 
@@ -32,6 +35,20 @@ public class Main extends JavaPlugin {
         }
 
         prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix"));
+
+        mysql = new MySQL(getConfig().getString("MySQL.Host"), getConfig().getInt("MySQL.Port"), getConfig().getString("MySQL.Database"), getConfig().getString("MySQL.Username"), getConfig().getString("MySQL.Password"));
+
+        if (mysql.isClosed()) {
+
+            sendMessageToConsole(prefix + "&cError to connect MySQL, check config.yml!");
+
+            if (mysql != null && mysql.isClosed()) {
+
+                Bukkit.getServer().shutdown();
+                return;
+
+            }
+        }
 
         sendMessageToConsole(prefix + "&f====================");
         sendMessageToConsole(prefix + "&fJuicyLuckyWars by Ldoin :3");
