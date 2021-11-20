@@ -59,7 +59,9 @@ public class LuckyBlockItem {
 
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(displayName);
+        if (displayName != null)
+            meta.setDisplayName(displayName);
+
         meta.setLore(lore);
 
         item.setItemMeta(meta);
@@ -85,7 +87,10 @@ public class LuckyBlockItem {
             } else
                 amount[0] = config.getInt("items." + item + ".amount");
 
-            String displayName = config.getString("items." + item + ".name").replace("&", "§");
+            String displayName = null;
+
+            if (config.contains("items." + item + ".name"))
+                displayName = config.getString("items." + item + ".name").replace("&", "§");
 
             List<String> lore = new ArrayList<>();
 

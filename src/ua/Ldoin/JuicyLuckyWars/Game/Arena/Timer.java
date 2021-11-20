@@ -30,7 +30,7 @@ public class Timer extends BukkitRunnable {
         if (timeToEnd == 0) {
 
             timeToEnd = Main.plugin.getConfig().getInt("Arena.TimeToEnd");
-            Arena.arena.end();
+            Arena.arena.end(true);
 
         }
     }

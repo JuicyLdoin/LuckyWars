@@ -35,8 +35,7 @@ public class Quit implements Listener {
         if (!Arena.arena.isStarted())
             e.setQuitMessage(Main.replace(Main.plugin.getConfig().getString("QuitMessage"), p));
 
-        if (Arena.arena.getPlayers().size() <= 1)
-            Arena.arena.end();
+        Arena.arena.end(false);
 
         ArenaPlayer.unload(p);
 

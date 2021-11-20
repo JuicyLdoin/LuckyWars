@@ -179,7 +179,7 @@ public class Main extends JavaPlugin {
         sendMessageToConsole(prefix + "&fJuicyLuckyWars by Ldoin :3");
         sendMessageToConsole(prefix + "&fVersion: 1.0");
 
-        Arena.arena.end();
+        Arena.arena.end(true);
 
         for (World w : Bukkit.getWorlds())
             for (Entity e : w.getEntities())
