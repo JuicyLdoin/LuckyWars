@@ -26,6 +26,12 @@ public class Arena {
 
     private final FileConfiguration config = Main.plugin.getConfig();
 
+    public static int getPlayersToStart() {
+
+        return Math.max(arena.getMinPlayers() - Bukkit.getOnlinePlayers().size() - arena.getSpectators().size(), 0);
+
+    }
+
     public Arena() {
 
         this.map = config.getString("Arena.Name");

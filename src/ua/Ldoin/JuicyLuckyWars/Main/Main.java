@@ -9,6 +9,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
+import ua.Ldoin.JuicyLuckyWars.Game.Arena.Timer;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 import ua.Ldoin.JuicyLuckyWars.Listeners.Canceler;
@@ -119,9 +120,27 @@ public class Main extends JavaPlugin {
 
     }
 
-    public static String replace(String str, Player p) {
+    public static String replace(String str, Player pl) {
 
+        str = str.replace("%prefix%", prefix);
 
+        str = str.replace("%player%", pl.getDisplayName())
+                .replace("%map%", Arena.arena.getMap())
+                .replace("%playertostart%", String.valueOf(Arena.getPlayersToStart()))
+                .replace("%toend%", String.valueOf(Timer.timeToEnd))
+                .replace("%tostart%", String.valueOf(Timer.timeToStart))
+                .replace("%name%", pl.getName());
+
+        PPlayer p = PPlayer.getPPlayer(pl);
+
+        if (p != null)
+            str = str.replace("%rank%", p.getGroup().getPrefix())
+                    .replace("%level%", String.valueOf(p.getLevel()))
+                    .replace("%xp%", String.valueOf(p.getXP()))
+                    .replace("%gold%", String.valueOf(p.getGold()))
+                    .replace("%diamonds%", String.valueOf(p.getDiamonds()));
+
+        str = str.replace("&", "§");
 
         return str;
 
