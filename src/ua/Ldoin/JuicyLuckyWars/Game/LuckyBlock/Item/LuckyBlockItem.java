@@ -55,7 +55,7 @@ public class LuckyBlockItem {
         ItemStack item = new ItemStack(material, amount.length == 1 ? amount[0] : ThreadLocalRandom.current().nextInt(amount[1] - amount[0]) + amount[0], data);
 
         for (LuckyEnchantment enchantment : enchantments)
-            item.addEnchantment(enchantment.getEnchantment(), enchantment.getLevel());
+            item.addUnsafeEnchantment(enchantment.getEnchantment(), enchantment.getLevel() + 1);
 
         ItemMeta meta = item.getItemMeta();
 

@@ -19,13 +19,7 @@ public class ArenaPlayer {
 
     }
 
-    private static final Map<String, ArenaPlayer> players = new HashMap<>();
-
-    public static ArenaPlayer getArenaPlayer(Player player) {
-
-        return players.get(player.getName());
-
-    }
+    public static final Map<String, ArenaPlayer> players = new HashMap<>();
 
     private final Player player;
 

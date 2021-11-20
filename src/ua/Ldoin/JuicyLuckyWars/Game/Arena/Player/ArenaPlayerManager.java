@@ -52,7 +52,7 @@ public class ArenaPlayerManager {
         if (!playerExists(p.getName()))
             createPlayer(p.getName());
 
-        ArenaPlayer pl = ArenaPlayer.getArenaPlayer(p);
+        ArenaPlayer pl = ArenaPlayer.players.get(p.getName());
 
         if (pl == null)
             return;
@@ -76,7 +76,7 @@ public class ArenaPlayerManager {
         if (!playerExists(p.getName()))
             createPlayer(p.getName());
 
-        ArenaPlayer pl = ArenaPlayer.getArenaPlayer(p);
+        ArenaPlayer pl = ArenaPlayer.players.get(p.getName());
 
         if (pl == null)
             return;

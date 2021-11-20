@@ -1,5 +1,7 @@
 package ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -7,14 +9,13 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Main.Main;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LuckyBlock {
@@ -144,7 +145,7 @@ public class LuckyBlock {
 
         location.getBlock().setTypeIdAndData(95, (byte) data, false);
 
-        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location.clone().subtract(-0.5, 1.2, -0.5), EntityType.ARMOR_STAND);
 
         stand.setBasePlate(false);
         stand.setVisible(false);
@@ -158,10 +159,12 @@ public class LuckyBlock {
 
     }
 
-    public void breakBlock(Location location) {
+    public void breakBlock(Location location, boolean items) {
 
         display.get(location).remove();
-        dropItems(location);
+
+        if (items)
+            dropItems(location);
 
         Arena.arena.getLuckyBlockStorage().remove(location);
 
@@ -169,8 +172,25 @@ public class LuckyBlock {
 
     public ItemStack getItemStack() {
 
-        ItemStack item = new ItemStack(Material.SKULL_ITEM);
-        ItemMeta meta = item.getItemMeta();
+        ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+
+        SkullMeta meta = (SkullMeta) item.getItemMeta();
+
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        profile.getProperties().put("textures", new Property("textures", head));
+
+        try {
+
+            Field profileField = meta.getClass().getDeclaredField("profile");
+
+            profileField.setAccessible(true);
+            profileField.set(meta, profile);
+
+        } catch (IllegalArgumentException | NoSuchFieldException | SecurityException | IllegalAccessException error) {
+
+            error.printStackTrace();
+
+        }
 
         meta.setDisplayName(displayName.replace("&", "§"));
 

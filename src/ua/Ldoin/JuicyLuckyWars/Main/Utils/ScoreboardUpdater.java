@@ -20,7 +20,7 @@ public class ScoreboardUpdater extends BukkitRunnable {
     public static void setScoreboard(Player p, String board) {
 
         Scoreboard b = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective o = b.registerNewObjective("board", "dummy");
+        Objective o = b.registerNewObjective(board, "dummy");
 
         o.setDisplaySlot(DisplaySlot.SIDEBAR);
         o.setDisplayName(sb.getString("scoreboard." + board + ".title").replace("&", "§"));
@@ -52,6 +52,7 @@ public class ScoreboardUpdater extends BukkitRunnable {
 
         }
 
+        updater.put(p, board);
         p.setScoreboard(b);
 
     }

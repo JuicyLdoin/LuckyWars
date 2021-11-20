@@ -220,6 +220,9 @@ public class Arena {
                     }
                 }
 
+                ArenaPlayer.players.put(player.getName(), new ArenaPlayer(player));
+                players.add(new ArenaPlayer(player));
+
                 player.sendTitle("§aИгра началась!", "");
                 ScoreboardUpdater.setScoreboard(player, "game");
 
@@ -265,6 +268,8 @@ public class Arena {
         for (Player p : Bukkit.getOnlinePlayers())
             if (p.getGameMode().equals(GameMode.SPECTATOR))
                 initSpectator(p);
+
+        ArenaPlayer.players.clear();
 
         new Arena();
 

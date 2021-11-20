@@ -22,6 +22,12 @@ public class LuckyBlockStorage {
 
     }
 
+    public boolean contains(Location location) {
+
+        return luckyBlocks.containsKey(location);
+
+    }
+
     public void remove(Location location) {
 
         luckyBlocks.remove(location);
@@ -29,6 +35,9 @@ public class LuckyBlockStorage {
     }
 
     public void clear() {
+
+        for (Location location : luckyBlocks.keySet())
+            luckyBlocks.get(location).breakBlock(location, false);
 
         luckyBlocks.clear();
 

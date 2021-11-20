@@ -29,7 +29,7 @@ public class Quit implements Listener {
 
         }
 
-        ArenaPlayer ap = ArenaPlayer.getArenaPlayer(p);
+        ArenaPlayer ap = ArenaPlayer.players.get(p.getName());
         Arena.arena.getPlayers().remove(ap);
 
         if (!Arena.arena.isStarted())

@@ -46,7 +46,8 @@ public class Chat implements Listener {
             ex.printStackTrace();
 
         }
-        ArenaPlayer ap = ArenaPlayer.getArenaPlayer(p);
+
+        ArenaPlayer ap = ArenaPlayer.players.get(p.getName());
 
         String msg = e.getMessage();
         e.setCancelled(true);
