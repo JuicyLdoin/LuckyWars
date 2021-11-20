@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
+import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 import ua.Ldoin.JuicyLuckyWars.Listeners.Canceler;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Listeners;
@@ -66,6 +67,7 @@ public class Main extends JavaPlugin {
         loadListeners();
         sendMessageToConsole(prefix + "&fListeners Loaded!");
 
+        LuckyBlockItem.init();
         LuckyBlock.init();
 
         (new ScoreboardUpdater()).runTaskTimer(this, 0L, 5L);

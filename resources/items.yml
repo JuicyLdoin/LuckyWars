@@ -1,0 +1,12 @@
+items:
+  test:
+    material: STAINED_GLASS
+    data: 4
+    amount: 15-53
+    name: '&cABOBA'
+    lore:
+      - ''
+      - '&fABOBA 2'
+      - ''
+    enchantments:
+      - DAMAGE_ALL=10;
