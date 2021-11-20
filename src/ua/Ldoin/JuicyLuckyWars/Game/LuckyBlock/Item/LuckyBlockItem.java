@@ -101,8 +101,22 @@ public class LuckyBlockItem {
             List<LuckyEnchantment> enchantments = new ArrayList<>();
 
             if (config.contains("items." + item + ".enchantments"))
-                for (String enchant : config.getStringList("items." + item + ".enchantments"))
-                    enchantments.add(new LuckyEnchantment(Enchantment.getByName(enchant.split("=")[0].toUpperCase()), Integer.parseInt(enchant.split("=")[1]) - 1));
+                for (String enchant : config.getStringList("items." + item + ".enchantments")) {
+
+                    Enchantment enchantment = Enchantment.getByName(enchant.split("=")[0].toUpperCase());
+                    int[] levels = new int[enchant.split("=")[1].contains("-") ? 2 : 1];
+
+                    if (enchant.split("=")[1].contains("-")) {
+
+                        levels[0] = Integer.parseInt(enchant.split("=")[1].split("-")[0]);
+                        levels[1] = Integer.parseInt(enchant.split("=")[1].split("-")[1]);
+
+                    } else
+                        levels[0] = Integer.parseInt(enchant.split("=")[1]);
+
+                    enchantments.add(new LuckyEnchantment(enchantment, levels));
+
+                }
 
             items.put(item, new LuckyBlockItem(material, data, amount, displayName, lore, enchantments));
 
