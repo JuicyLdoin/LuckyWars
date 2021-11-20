@@ -1,5 +1,6 @@
 package ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LuckyBlock {
 
@@ -36,10 +38,21 @@ public class LuckyBlock {
         return luckyBlocks.get(name);
 
     }
+
     public static LuckyBlock getLuckyBlockByData(short data) {
 
         for (LuckyBlock block : luckyBlocks.values())
             if (block.getData() == data)
+                return block;
+
+        return null;
+
+    }
+
+    public static LuckyBlock getLuckyBlockByItemStack(ItemStack itemStack) {
+
+        for (LuckyBlock block : luckyBlocks.values())
+            if (block.getItemStack().equals(itemStack))
                 return block;
 
         return null;
@@ -96,6 +109,27 @@ public class LuckyBlock {
     public List<LuckyBlockItem> getItems() {
 
         return items;
+
+    }
+
+    private List<ItemStack> getRandomItems() {
+
+        List<ItemStack> items = new ArrayList<>();
+
+        int amount = itemsAmount.length == 1 ? itemsAmount[0] : ThreadLocalRandom.current().nextInt(itemsAmount[1] - itemsAmount[0]) + itemsAmount[0];
+
+        while (items.size() < amount)
+            items.add(this.items.size() == 1 ? this.items.get(0).buildToItemStack() :
+                    this.items.get(ThreadLocalRandom.current().nextInt(this.items.size() - 1)).buildToItemStack());
+
+        return items;
+
+    }
+
+    public void dropItems(Location location) {
+
+        for (ItemStack item : getRandomItems())
+            location.getWorld().dropItem(location, item);
 
     }
 
