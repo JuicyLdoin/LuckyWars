@@ -1,1 +1,23 @@
 prefix: '&eJuicyLuckyWars &f>> '
+
+scoreboard:
+  wait:
+    title: '&e&lLuckyWars'
+    rowscount: 5
+    rows:
+      5: '❘   '
+      4: '❘ &e&lОжидание'
+      3: '❘ Карта: &e%map%'
+      2: '❘  '
+      1: '❘ До начала игры: &e%tostart%'
+  game:
+    title: '&e&lLuckyWars'
+    rowscount: 7
+    rows:
+      7: '❘    '
+      6: '❘ &e&lИгра'
+      5: '❘ Карта: &e%map%'
+      4: '❘   '
+      3: '❘ Убийства: &e%kills%'
+      2: '❘ Лаки блоков: &e%blocks%'
+      1: '❘ '

@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
 
 public class Main extends JavaPlugin {
 
@@ -41,6 +42,8 @@ public class Main extends JavaPlugin {
                 if (!(e instanceof Player))
                     e.remove();
 
+        (new ScoreboardUpdater()).runTaskTimer(this, 0L, 5L);
+
         sendMessageToConsole(prefix + "&fPlugin Enabled!");
         sendMessageToConsole(prefix + "&f====================");
 
@@ -49,6 +52,14 @@ public class Main extends JavaPlugin {
     public static void sendMessageToConsole(String message) {
 
         Bukkit.getConsoleSender().sendMessage(message.replace("&", "§"));
+
+    }
+
+    public static String replace(String str, Player p) {
+
+
+
+        return str;
 
     }
 
