@@ -1,15 +1,53 @@
 package ua.Ldoin.JuicyLuckyWars.Listeners;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
+import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 
 public class Canceler implements Listener {
+
+    @EventHandler
+    public void BlockSave(BlockBreakEvent e) {
+
+        if (!Arena.arena.isStarted())
+            e.setCancelled(true);
+
+        if (e.getBlock().getType().equals(Material.STAINED_GLASS))
+            if (LuckyBlock.getLuckyBlockByData(e.getBlock().getData()) != null)
+                return;
+
+        Arena.arena.getBlockStorage().addBlock(e.getBlock());
+
+    }
+
+    @EventHandler
+    public void BlockSave(BlockIgniteEvent e) {
+
+        Arena.arena.getBlockStorage().addBlock(e.getBlock());
+
+    }
+
+    @EventHandler
+    public void BlockSave(BlockPlaceEvent e) {
+
+        Arena.arena.getBlockStorage().addBlock(e.getBlock());
+
+    }
+
+    @EventHandler
+    public void BlockSave(BlockFromToEvent e) {
+
+        Arena.arena.getBlockStorage().addBlock(e.getBlock());
+
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onThunder(ThunderChangeEvent e) {
@@ -39,21 +77,6 @@ public class Canceler implements Listener {
             return;
 
         e.setCancelled(true);
-
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onArmorDamageByEntity(EntityDamageByEntityEvent e) {
-
-        if (e.getEntity() instanceof org.bukkit.entity.ArmorStand)
-            e.setCancelled(true);
-
-    }
-
-    @EventHandler
-    public void xpChange(PlayerExpChangeEvent e) {
-
-        e.setAmount(0);
 
     }
 

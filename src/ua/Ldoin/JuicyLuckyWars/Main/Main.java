@@ -19,6 +19,8 @@ import ua.Ldoin.JuicyLuckyWars.Main.Utils.SQL.*;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.*;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.*;
 
+import java.sql.SQLException;
+
 public class Main extends JavaPlugin {
 
     public static String prefix;
@@ -73,8 +75,8 @@ public class Main extends JavaPlugin {
         loadListeners();
         sendMessageToConsole(prefix + "&fListeners Loaded!");
 
-        LuckyBlockItem.init();
-        LuckyBlock.init();
+        ua.Ldoin.JuicyLuckyWars.Game.Arena.Main.init(this);
+        sendMessageToConsole(prefix + "&fArena Loaded!");
 
         Group.addGroups();
 
@@ -89,6 +91,16 @@ public class Main extends JavaPlugin {
 
         sendMessageToConsole(prefix + "&fPlugin Enabled!");
         sendMessageToConsole(prefix + "&f====================");
+
+        try {
+
+            JuicyServer.init();
+
+        } catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+
+        }
 
         JuicyServerUpdater.stoped = true;
         JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
@@ -172,8 +184,6 @@ public class Main extends JavaPlugin {
             PPlayer.removePlayer(p);
 
         }
-
-        (new ScoreboardUpdater()).runTaskTimer(this, 0L, 5L);
 
         sendMessageToConsole(prefix + "&fPlugin Disabled!");
         sendMessageToConsole(prefix + "&f====================");
