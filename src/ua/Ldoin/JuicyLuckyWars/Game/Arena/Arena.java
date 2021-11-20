@@ -1,5 +1,6 @@
 package ua.Ldoin.JuicyLuckyWars.Game.Arena;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,18 +11,27 @@ import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 import ua.Ldoin.JuicyLuckyWars.Main.Main;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.LocationUtil;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayer;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.JuicyServer;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.JuicyServerManager;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.JuicyServerStates;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.JuicyServerUpdater;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Arena {
 
-    private FileConfiguration config = Main.plugin.getConfig();
+    private final FileConfiguration config = Main.plugin.getConfig();
 
     public Arena() {
 
         this.map = config.getString("Arena.Name");
+
+        Timer.timeToStart = this.config.getInt("Arena.TimeToStart");
+        Timer.timeToEnd = this.config.getInt("Arena.TimeToEnd");
 
         this.started = false;
 
@@ -32,9 +42,6 @@ public class Arena {
 
         for (String s : config.getStringList("Arena.Locations.Players"))
             spawnLocations.add(LocationUtil.getLocation(s));
-
-        for (String s : config.getStringList("Arena.Locations.LuckyBlocks"))
-            LuckyBlock.getLuckyBlockByName(s.split("=")[0]).placeBlock(Objects.requireNonNull(LocationUtil.getLocation(s.split("=")[1])));
 
         players = new ArrayList<>();
         spectators = new ArrayList<>();
@@ -178,7 +185,40 @@ public class Arena {
 
     public void start() {
 
+        JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
+        JuicyServerUpdater.stoped = true;
 
+        server.setState(JuicyServerStates.INGAME);
+
+        JuicyServerManager.saveServer(server);
+        JuicyServerUpdater.stoped = false;
+
+        List<Location> spawned = new ArrayList<>();
+
+        for (Player player : Bukkit.getOnlinePlayers())
+            if (!getSpectators().contains(player)) {
+
+                while (true) {
+
+                    Location spawn = spawnLocations.get(ThreadLocalRandom.current().nextInt(spawnLocations.size() - 1));
+
+                    if (!spawned.contains(spawn)) {
+
+                        player.teleport(spawn);
+
+                        spawned.add(spawn);
+                        break;
+
+                    }
+                }
+
+                player.sendTitle("§aИгра началась!", "");
+                ScoreboardUpdater.setScoreboard(player, "game");
+
+            }
+
+        for (String s : config.getStringList("Arena.Locations.LuckyBlocks"))
+            LuckyBlock.getLuckyBlockByName(s.split("=")[0]).placeBlock(Objects.requireNonNull(LocationUtil.getLocation(s.split("=")[1])));
 
     }
 
@@ -187,10 +227,34 @@ public class Arena {
         if (players.size() > 1)
             return;
 
+        JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
+        JuicyServerUpdater.stoped = true;
+
+        server.setState(JuicyServerStates.WAITING);
+
+        JuicyServerManager.saveServer(server);
+        JuicyServerUpdater.stoped = false;
+
         ArenaPlayer winner = players.get(0);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+
+            player.sendMessage(Main.prefix + "§fИгра окончена!");
+            player.sendMessage(Main.prefix + "");
+            player.sendMessage(Main.prefix + "§fПобедитель: §e" + PPlayer.getPPlayer(winner.getPlayer()).getDisplayName());
+            player.sendMessage(Main.prefix + "");
+            player.sendMessage(Main.prefix + "§fЛучшие игроки по убийствам:");
+
+        }
 
         blockStorage.clear();
         luckyBlockStorage.clear();
+
+        Timer.timeToStart = this.config.getInt("Arena.TimeToStart");
+
+        for (Player p : Bukkit.getOnlinePlayers())
+            if (p.getGameMode().equals(GameMode.SPECTATOR))
+                initSpectator(p);
 
         new Arena();
 

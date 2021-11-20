@@ -7,6 +7,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Main.Main;
 
@@ -130,7 +131,7 @@ public class LuckyBlock {
 
     }
 
-    public void dropItems(Location location) {
+    private void dropItems(Location location) {
 
         for (ItemStack item : getRandomItems())
             location.getWorld().dropItem(location, item);
@@ -153,11 +154,16 @@ public class LuckyBlock {
 
         display.put(location, stand);
 
+        Arena.arena.getLuckyBlockStorage().add(location, this);
+
     }
 
     public void breakBlock(Location location) {
 
         display.get(location).remove();
+        dropItems(location);
+
+        Arena.arena.getLuckyBlockStorage().remove(location);
 
     }
 
