@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JuicyLuckyWars">
+    <output-path>E:/Server/JuicyWorld</output-path>
+    <root id="archive" name="JuicyLuckyWars.jar">
+      <element id="module-output" name="JuicyLuckyWars" />
+      <element id="dir-copy" path="$PROJECT_DIR$/resources" />
+    </root>
+  </artifact>
+</component>
