@@ -55,5 +55,8 @@ Arena:
   TimeToStart: 30
   TimeToEnd: 600
 
-  Spawns:
-    - 1 1 1
+  Locations:
+    LuckyBlocks:
+      - world 1 1 1
+    Players:
+      - world 1 1 1

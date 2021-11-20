@@ -15,11 +15,17 @@ public class ArenaPlayer {
 
         luckyBlocks = 0;
 
-        players.put(player, this);
+        players.put(player.getName(), this);
 
     }
 
-    public static Map<Player, ArenaPlayer> players = new HashMap<>();
+    private static final Map<String, ArenaPlayer> players = new HashMap<>();
+
+    public static ArenaPlayer getArenaPlayer(Player player) {
+
+        return players.get(player.getName());
+
+    }
 
     private final Player player;
 
@@ -72,11 +78,16 @@ public class ArenaPlayer {
 
     public static void unload(Player p) {
 
-        if (!players.containsKey(p))
+        if (!players.containsKey(p.getName()))
             return;
 
         ArenaPlayerManager.savePlayer(p);
-        players.remove(p);
+
+    }
+
+    public static void clear() {
+
+        players.clear();
 
     }
 }
