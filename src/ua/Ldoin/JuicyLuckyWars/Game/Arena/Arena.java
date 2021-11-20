@@ -245,6 +245,8 @@ public class Arena {
             player.sendMessage(Main.prefix + "");
             player.sendMessage(Main.prefix + "§fЛучшие игроки по убийствам:");
 
+            ScoreboardUpdater.setScoreboard(player, "wait");
+
         }
 
         blockStorage.clear();

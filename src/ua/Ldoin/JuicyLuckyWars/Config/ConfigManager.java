@@ -13,7 +13,7 @@ public class ConfigManager {
     public static void registerConfiguration(Object c) {
 
         configs.add((Configuration)c);
-        Main.plugin.getLogger().log(Level.CONFIG, "" + c + "");
+        Main.getPlugin(Main.class).getLogger().log(Level.CONFIG, "" + c + "");
 
     }
 
@@ -27,12 +27,6 @@ public class ConfigManager {
 
         for (Configuration config : configs)
             config.init();
-
-    }
-
-    public static Configuration getConfiguration(Configuration config) {
-
-        return config;
 
     }
 }

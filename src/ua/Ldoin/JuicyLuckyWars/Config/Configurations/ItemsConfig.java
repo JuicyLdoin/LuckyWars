@@ -7,7 +7,9 @@ import java.io.File;
 
 public class ItemsConfig extends Configuration {
 
-    private static final File f = new File(Main.plugin.getDataFolder(), "items.yml");
+    private static final Main plugin = Main.getPlugin(Main.class);
+
+    private static final File f = new File(plugin.getDataFolder(), "items.yml");
 
     public ItemsConfig() {
 
@@ -21,7 +23,7 @@ public class ItemsConfig extends Configuration {
             delete();
 
         if (!isFile())
-            Main.plugin.saveResource("items.yml", true);
+            plugin.saveResource("items.yml", true);
 
     }
 }

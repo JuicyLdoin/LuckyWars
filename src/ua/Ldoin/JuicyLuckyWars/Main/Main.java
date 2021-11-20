@@ -11,7 +11,9 @@ import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 import ua.Ldoin.JuicyLuckyWars.Listeners.Canceler;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Group;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Listeners;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayer;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.SQL.MySQL;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
 
@@ -69,6 +71,14 @@ public class Main extends JavaPlugin {
 
         LuckyBlockItem.init();
         LuckyBlock.init();
+
+        Group.addGroups();
+        for (Player p : Bukkit.getOnlinePlayers()) {
+
+            PPlayer.loadPlayer(p);
+            ScoreboardUpdater.setScoreboard(p, "wait");
+
+        }
 
         (new ScoreboardUpdater()).runTaskTimer(this, 0L, 5L);
 

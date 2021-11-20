@@ -9,4 +9,4 @@ items:
       - '&fABOBA 2'
       - ''
     enchantments:
-      - DAMAGE_ALL=10;
+      - DAMAGE_ALL=10

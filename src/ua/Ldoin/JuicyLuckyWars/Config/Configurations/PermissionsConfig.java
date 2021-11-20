@@ -7,7 +7,9 @@ import java.io.File;
 
 public class PermissionsConfig extends Configuration {
 
-    private static final File f = new File(Main.plugin.getDataFolder(), "permissions.yml");
+    private static final Main plugin = Main.getPlugin(Main.class);
+
+    private static final File f = new File(plugin.getDataFolder(), "permissions.yml");
 
     public PermissionsConfig() {
 
@@ -21,7 +23,7 @@ public class PermissionsConfig extends Configuration {
             delete();
 
         if (!isFile())
-            Main.plugin.saveResource("permissions.yml", true);
+            plugin.saveResource("permissions.yml", true);
 
     }
 }

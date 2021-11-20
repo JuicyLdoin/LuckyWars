@@ -11,7 +11,6 @@ import java.util.logging.Level;
 
 public class Configuration {
 
-
     private static Configuration items;
     private static Configuration permissions;
 
@@ -101,8 +100,8 @@ public class Configuration {
 
         public static void init() {
 
-            Configuration.items = ConfigManager.getConfiguration(new ItemsConfig());
-            Configuration.permissions = ConfigManager.getConfiguration(new PermissionsConfig());
+            Configuration.items = new ItemsConfig();
+            Configuration.permissions = new PermissionsConfig();
 
             Configuration.itemsConfig = Configuration.items.getConfig();
             Configuration.permissionsConfig = Configuration.permissions.getConfig();

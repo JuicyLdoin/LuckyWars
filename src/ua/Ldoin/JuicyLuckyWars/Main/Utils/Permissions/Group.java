@@ -84,7 +84,7 @@ public class Group {
 
         }
 
-        Bukkit.getConsoleSender().sendMessage(Main.prefix + "Loaded " + groups.size() + " groups!");
+        Bukkit.getConsoleSender().sendMessage(Main.prefix + "Loaded §e" + groups.size() + " §fGroups!");
 
     }
 }
