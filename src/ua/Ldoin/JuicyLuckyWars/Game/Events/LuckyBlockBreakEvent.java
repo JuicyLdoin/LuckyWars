@@ -14,14 +14,18 @@ public class LuckyBlockBreakEvent extends JuicyEvent {
     private final Location location;
     private final LuckyBlock luckyBlock;
 
+    private LuckyBlockBreakSource breakSource;
+
     private Boolean Cancel;
 
-    public LuckyBlockBreakEvent(Player player, Location location, LuckyBlock luckyBlock) {
+    public LuckyBlockBreakEvent(Player player, Location location, LuckyBlock luckyBlock, LuckyBlockBreakSource breakSource) {
 
         this.player = player;
 
         this.location = location;
         this.luckyBlock = luckyBlock;
+
+        this.breakSource = breakSource;
 
         this.Cancel = Arena.arena == null;
 
@@ -42,6 +46,18 @@ public class LuckyBlockBreakEvent extends JuicyEvent {
     public LuckyBlock getLuckyBlock() {
 
         return luckyBlock;
+
+    }
+
+    public LuckyBlockBreakSource getBreakSource() {
+
+        return breakSource;
+
+    }
+
+    public void setBreakSource(LuckyBlockBreakSource breakSource) {
+
+        this.breakSource = breakSource;
 
     }
 
@@ -68,6 +84,12 @@ public class LuckyBlockBreakEvent extends JuicyEvent {
     public void setCancelled(boolean cancel) {
 
         this.Cancel = cancel;
+
+    }
+
+    public enum LuckyBlockBreakSource {
+
+        PLAYER, OTHER
 
     }
 }
