@@ -38,7 +38,14 @@ public class Canceler implements Listener {
     @EventHandler
     public void BlockSave(BlockPlaceEvent e) {
 
-        Arena.arena.getBlockStorage().addBlock(e.getBlock());
+        if (!Arena.arena.isStarted())
+            e.setCancelled(true);
+
+        if (e.getBlock().getType().equals(Material.STAINED_GLASS))
+            if (LuckyBlock.getLuckyBlockByData(e.getBlock().getData()) != null)
+                return;
+
+        Arena.arena.getBlockStorage().addBlockAir(e.getBlock());
 
     }
 

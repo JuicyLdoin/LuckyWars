@@ -21,6 +21,12 @@ public class BlockStorage {
         blocks.put(block.getLocation(), new SerializableBlock(block.getType().getId(), block.getData()));
         
     }
+
+    public void addBlockAir(Block block) {
+
+        blocks.put(block.getLocation(), new SerializableBlock(0));
+
+    }
     
     public void clear() {
 

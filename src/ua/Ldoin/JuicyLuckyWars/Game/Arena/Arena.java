@@ -235,9 +235,6 @@ public class Arena {
 
     public void end() {
 
-        if (players.size() > 1)
-            return;
-
         JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
         JuicyServerUpdater.stoped = true;
 
