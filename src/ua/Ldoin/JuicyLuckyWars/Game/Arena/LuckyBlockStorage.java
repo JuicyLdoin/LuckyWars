@@ -36,8 +36,9 @@ public class LuckyBlockStorage {
 
     public void clear() {
 
-        for (Location location : luckyBlocks.keySet())
-            luckyBlocks.get(location).breakBlock(location, false);
+        if (!luckyBlocks.isEmpty())
+            for (Location location : luckyBlocks.keySet())
+                luckyBlocks.get(location).breakBlock(location, false);
 
         luckyBlocks.clear();
 

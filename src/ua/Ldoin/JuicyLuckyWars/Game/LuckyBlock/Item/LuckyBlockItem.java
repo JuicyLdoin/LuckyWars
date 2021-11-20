@@ -100,7 +100,7 @@ public class LuckyBlockItem {
 
             List<LuckyEnchantment> enchantments = new ArrayList<>();
 
-            if (config.contains("items." + item + ".lore"))
+            if (config.contains("items." + item + ".enchantments"))
                 for (String enchant : config.getStringList("items." + item + ".enchantments"))
                     enchantments.add(new LuckyEnchantment(Enchantment.getByName(enchant.split("=")[0].toUpperCase()), Integer.parseInt(enchant.split("=")[1]) - 1));
 

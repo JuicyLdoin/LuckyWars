@@ -270,6 +270,7 @@ public class Arena {
                 player.sendMessage(Main.prefix + "§fЛучшие игроки по убийствам:");
 
                 ScoreboardUpdater.setScoreboard(player, "wait");
+                player.getInventory().clear();
 
             }
         }

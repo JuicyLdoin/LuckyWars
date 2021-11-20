@@ -8,7 +8,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
@@ -20,7 +19,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class LuckyBlock {
 
-    public LuckyBlock(short data, String displayName, String head, int itemChance, int trapChance, int[] itemsAmount, List<LuckyBlockItem> items) {
+    public LuckyBlock(String name, short data, String displayName, String head, int itemChance, int trapChance, int[] itemsAmount, List<LuckyBlockItem> items) {
+
+        this.name = name;
 
         this.data = data;
         this.displayName = displayName;
@@ -65,6 +66,8 @@ public class LuckyBlock {
 
     }
 
+    private final String name;
+
     private final short data;
     private final String displayName;
 
@@ -75,6 +78,12 @@ public class LuckyBlock {
 
     private final int[] itemsAmount;
     private final List<LuckyBlockItem> items;
+
+    public String getName() {
+
+        return name;
+
+    }
 
     public short getData() {
 
@@ -155,7 +164,7 @@ public class LuckyBlock {
 
         display.put(location, stand);
 
-        Arena.arena.getLuckyBlockStorage().add(location, this);
+        Arena.arena.getLuckyBlockStorage().add(location.clone(), this);
 
     }
 
@@ -166,7 +175,7 @@ public class LuckyBlock {
         if (items)
             dropItems(location);
 
-        Arena.arena.getLuckyBlockStorage().remove(location);
+        Arena.arena.getLuckyBlockStorage().remove(location.clone());
 
     }
 
@@ -239,7 +248,7 @@ public class LuckyBlock {
                 for (String item : config.getStringList("LuckyBlocks." + block + ".items.list"))
                     items.add(LuckyBlockItem.getItemByName(item));
 
-            luckyBlocks.put(block, new LuckyBlock(data, displayName, head, itemChance, trapChance, amount, items));
+            luckyBlocks.put(block, new LuckyBlock(block, data, displayName, head, itemChance, trapChance, amount, items));
 
         }
 
