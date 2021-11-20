@@ -8,15 +8,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import ua.Ldoin.JuicyLuckyWars.Config.Configuration;
+import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.Item.LuckyBlockItem;
 import ua.Ldoin.JuicyLuckyWars.Game.LuckyBlock.LuckyBlock;
 import ua.Ldoin.JuicyLuckyWars.Listeners.Canceler;
-import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Group;
-import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Listeners;
-import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayer;
-import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayerManager;
-import ua.Ldoin.JuicyLuckyWars.Main.Utils.SQL.MySQL;
-import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.*;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.*;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.SQL.*;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.*;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.*;
 
 public class Main extends JavaPlugin {
 
@@ -58,6 +58,8 @@ public class Main extends JavaPlugin {
             }
         }
 
+        (new JuicyServerUpdater()).runTaskTimer(this, 0L, 5L);
+
         sendMessageToConsole(prefix + "&f====================");
         sendMessageToConsole(prefix + "&fJuicyLuckyWars by Ldoin :3");
         sendMessageToConsole(prefix + "&fVersion: 1.0");
@@ -87,6 +89,19 @@ public class Main extends JavaPlugin {
         sendMessageToConsole(prefix + "&fPlugin Enabled!");
         sendMessageToConsole(prefix + "&f====================");
 
+        JuicyServerUpdater.stoped = true;
+        JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
+
+        if (Bukkit.hasWhitelist())
+            server.setState(JuicyServerStates.DEVELOPMENT);
+        else
+            server.setState(JuicyServerStates.WAITING);
+
+        server.setMaxPlayers(Arena.arena.getMaxPlayers());
+
+        JuicyServerManager.saveServer(server);
+        JuicyServerUpdater.stoped = false;
+
     }
 
     public void loadListeners() {
@@ -113,6 +128,15 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
+
+        JuicyServerUpdater.stoped = true;
+        JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
+
+        server.setPlayers(0);
+        server.setStatus("disabled");
+        server.setState(JuicyServerStates.NULL);
+
+        JuicyServerManager.saveServer(server);
 
         sendMessageToConsole(prefix + "&f====================");
         sendMessageToConsole(prefix + "&fJuicyLuckyWars by Ldoin :3");
