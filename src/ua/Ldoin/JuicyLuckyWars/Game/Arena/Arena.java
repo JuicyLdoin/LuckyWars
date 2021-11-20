@@ -257,18 +257,21 @@ public class Arena {
         JuicyServerManager.saveServer(server);
         JuicyServerUpdater.stoped = false;
 
-        ArenaPlayer winner = players.get(0);
+        if (!players.isEmpty()) {
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
+            ArenaPlayer winner = players.get(0);
 
-            player.sendMessage(Main.prefix + "§fИгра окончена!");
-            player.sendMessage(Main.prefix + "");
-            player.sendMessage(Main.prefix + "§fПобедитель: §e" + PPlayer.getPPlayer(winner.getPlayer()).getDisplayName());
-            player.sendMessage(Main.prefix + "");
-            player.sendMessage(Main.prefix + "§fЛучшие игроки по убийствам:");
+            for (Player player : Bukkit.getOnlinePlayers()) {
 
-            ScoreboardUpdater.setScoreboard(player, "wait");
+                player.sendMessage(Main.prefix + "§fИгра окончена!");
+                player.sendMessage(Main.prefix + "");
+                player.sendMessage(Main.prefix + "§fПобедитель: §e" + PPlayer.getPPlayer(winner.getPlayer()).getDisplayName());
+                player.sendMessage(Main.prefix + "");
+                player.sendMessage(Main.prefix + "§fЛучшие игроки по убийствам:");
 
+                ScoreboardUpdater.setScoreboard(player, "wait");
+
+            }
         }
 
         blockStorage.clear();
