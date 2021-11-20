@@ -14,6 +14,7 @@ import ua.Ldoin.JuicyLuckyWars.Listeners.Canceler;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Group;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Permissions.Listeners;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayer;
+import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayerManager;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.SQL.MySQL;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
 
@@ -73,6 +74,7 @@ public class Main extends JavaPlugin {
         LuckyBlock.init();
 
         Group.addGroups();
+
         for (Player p : Bukkit.getOnlinePlayers()) {
 
             PPlayer.loadPlayer(p);
@@ -112,7 +114,26 @@ public class Main extends JavaPlugin {
 
     public void onDisable() {
 
+        sendMessageToConsole(prefix + "&f====================");
+        sendMessageToConsole(prefix + "&fJuicyLuckyWars by Ldoin :3");
+        sendMessageToConsole(prefix + "&fVersion: 1.0");
 
+        for (World w : Bukkit.getWorlds())
+            for (Entity e : w.getEntities())
+                if (!(e instanceof Player))
+                    e.remove();
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+
+            PPlayerManager.savePlayer(p);
+            PPlayer.removePlayer(p);
+
+        }
+
+        (new ScoreboardUpdater()).runTaskTimer(this, 0L, 5L);
+
+        sendMessageToConsole(prefix + "&fPlugin Disabled!");
+        sendMessageToConsole(prefix + "&f====================");
 
     }
 }
