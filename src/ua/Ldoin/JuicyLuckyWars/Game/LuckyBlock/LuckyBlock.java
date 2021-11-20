@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class LuckyBlock {
 
-    public LuckyBlock(short data, String displayName, String head, int itemChance, int trapChance, List<LuckyBlockItem> items) {
+    public LuckyBlock(short data, String displayName, String head, int itemChance, int trapChance, int[] itemsAmount, List<LuckyBlockItem> items) {
 
         this.data = data;
         this.displayName = displayName;
@@ -24,6 +24,7 @@ public class LuckyBlock {
         this.itemChance = itemChance;
         this.trapChance = trapChance;
 
+        this.itemsAmount = itemsAmount;
         this.items = items;
 
     }
@@ -53,6 +54,7 @@ public class LuckyBlock {
     private final int itemChance;
     private final int trapChance;
 
+    private final int[] itemsAmount;
     private final List<LuckyBlockItem> items;
 
     public short getData() {
@@ -82,6 +84,12 @@ public class LuckyBlock {
     public int getTrapChance() {
 
         return trapChance;
+
+    }
+
+    public int[] getItemsAmount() {
+
+        return itemsAmount;
 
     }
 
@@ -127,13 +135,23 @@ public class LuckyBlock {
             int itemChance = config.getInt("LuckyBlocks." + block + ".items.chance");
             int trapChance = config.getInt("LuckyBlocks." + block + ".trap.chance");
 
+            int[] amount = new int[config.getString("LuckyBlocks." + block + ".items.amount").contains("-") ? 2 : 1];
+
+            if (config.getString("LuckyBlocks." + block + ".items.amount").contains("-")) {
+
+                amount[0] = Integer.parseInt(config.getString("LuckyBlocks." + block + ".items.amount").split("-")[0]);
+                amount[1] = Integer.parseInt(config.getString("LuckyBlocks." + block + ".items.amount").split("-")[1]);
+
+            } else
+                amount[0] = config.getInt("LuckyBlocks." + block + ".items.amount");
+
             List<LuckyBlockItem> items = new ArrayList<>();
 
             if (config.contains("LuckyBlocks." + block + ".items.list"))
                 for (String item : config.getStringList("LuckyBlocks." + block + ".items.list"))
                     items.add(LuckyBlockItem.getItemByName(item));
 
-            luckyBlocks.put(block, new LuckyBlock(data, displayName, head, itemChance, trapChance, items));
+            luckyBlocks.put(block, new LuckyBlock(data, displayName, head, itemChance, trapChance, amount, items));
 
         }
 
