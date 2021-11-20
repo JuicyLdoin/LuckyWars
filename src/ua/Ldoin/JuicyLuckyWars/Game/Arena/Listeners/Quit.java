@@ -32,7 +32,8 @@ public class Quit implements Listener {
         ArenaPlayer ap = ArenaPlayer.getArenaPlayer(p);
         Arena.arena.getPlayers().remove(ap);
 
-        e.setQuitMessage(Main.prefix + "§fИгрок §e" + p.getDisplayName() + " §fвышел!");
+        if (!Arena.arena.isStarted())
+            e.setQuitMessage(Main.replace(Main.plugin.getConfig().getString("QuitMessage"), p));
 
         if (Arena.arena.getPlayers().size() <= 1)
             Arena.arena.end();

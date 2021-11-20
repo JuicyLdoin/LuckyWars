@@ -85,7 +85,7 @@ public class ScoreboardUpdater extends BukkitRunnable {
         for (Player p : Bukkit.getOnlinePlayers()) {
 
             if (!updater.containsKey(p))
-                updater.put(p, "default");
+                updater.put(p, "wait");
 
             updateScoreboard(p, updater.get(p));
 

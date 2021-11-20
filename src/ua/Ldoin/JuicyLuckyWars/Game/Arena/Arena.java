@@ -63,7 +63,7 @@ public class Arena {
 
     private final String map;
 
-    private final boolean started;
+    private boolean started;
 
     private final int minPlayers;
     private final int maxPlayers;
@@ -190,6 +190,8 @@ public class Arena {
     }
 
     public void start() {
+
+        started = true;
 
         JuicyServer server = JuicyServer.servers.get(Bukkit.getMotd());
         JuicyServerUpdater.stoped = true;

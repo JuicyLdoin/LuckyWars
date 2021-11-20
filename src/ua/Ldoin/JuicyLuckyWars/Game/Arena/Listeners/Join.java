@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
+import ua.Ldoin.JuicyLuckyWars.Main.Main;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Profile.PPlayer;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.ScoreboardUpdater;
 import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.*;
@@ -21,6 +22,8 @@ public class Join implements Listener {
         PPlayer pp = PPlayer.getPPlayer(pl);
 
         pl.setDisplayName(pp.getDisplayName());
+
+        e.setJoinMessage(Main.replace(Main.plugin.getConfig().getString("JoinMessage"), pl));
 
         if ((JuicyServer.servers.get(Bukkit.getMotd())).getState() == JuicyServerStates.INGAME) {
 

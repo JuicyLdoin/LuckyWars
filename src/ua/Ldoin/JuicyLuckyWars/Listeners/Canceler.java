@@ -94,4 +94,12 @@ public class Canceler implements Listener {
             e.setCancelled(true);
 
     }
+    
+    @EventHandler
+    public void Damage(EntityDamageByEntityEvent e) {
+
+        if (!Arena.arena.isStarted())
+            e.setCancelled(true);
+
+    }
 }

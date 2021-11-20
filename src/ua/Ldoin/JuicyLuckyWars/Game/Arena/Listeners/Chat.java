@@ -54,7 +54,7 @@ public class Chat implements Listener {
         if (Arena.arena.getSpectators().contains(p)) {
 
             for (Player pl : Arena.arena.getSpectators())
-                pl.sendMessage(">> " + PPlayer.getPPlayer(p).getDisplayGroup().getPrefix() + "" + p.getName() + " " + msg);
+                pl.sendMessage("§7Наблюдатели >> " + PPlayer.getPPlayer(p).getDisplayGroup().getPrefix() + " §f| §7" + p.getDisplayName() + " §f>> " + msg);
 
             return;
 
@@ -103,7 +103,7 @@ public class Chat implements Listener {
 
     private String chat(Player s, String msg) {
 
-        return PPlayer.getPPlayer(s).getDisplayGroup().getPrefix() + "" + s.getDisplayName() + " " + msg;
+        return PPlayer.getPPlayer(s).getDisplayGroup().getPrefix() + " §f|§f " + s.getDisplayName() + " §f>> " + msg;
 
     }
 }
