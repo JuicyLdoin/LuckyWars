@@ -32,6 +32,36 @@ public class LuckyBlockItem {
 
     }
 
+    public LuckyBlockItem(ItemStack item, int[] amount) {
+
+        material = item.getType();
+        data = item.getData().getData();
+
+        this.amount = amount;
+
+        if (item.hasItemMeta()) {
+
+            if (item.getItemMeta().hasDisplayName())
+                displayName = item.getItemMeta().getDisplayName();
+            else
+                displayName = null;
+
+            if (item.getItemMeta().hasLore())
+                lore = item.getItemMeta().getLore();
+            else
+                lore = new ArrayList<>();
+
+        } else {
+
+            displayName = null;
+            lore = new ArrayList<>();
+
+        }
+
+       enchantments = new ArrayList<>();
+
+    }
+
     private static final Map<String, LuckyBlockItem> items = new HashMap<>();
 
     public static LuckyBlockItem getItemByName(String name) {

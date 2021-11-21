@@ -175,7 +175,8 @@ public class LuckyBlock {
         if (items)
             dropItems(location);
 
-        Arena.arena.getLuckyBlockStorage().remove(location.clone());
+        if (items)
+            Arena.arena.getLuckyBlockStorage().remove(location.clone());
 
     }
 
