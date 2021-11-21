@@ -5,7 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import ua.Ldoin.JuicyLuckyWars.Game.Arena.Arena;
-import ua.Ldoin.JuicyLuckyWars.Main.Utils.Server.*;
 
 public class JoinAttemp implements Listener {
 
@@ -21,7 +20,7 @@ public class JoinAttemp implements Listener {
 
         }
 
-        if ((JuicyServer.servers.get(Bukkit.getMotd())).getState().equals(JuicyServerStates.INGAME) && !e.getPlayer().hasPermission("juicy.spectate")) {
+        if (Arena.arena.isStarted() && !e.getPlayer().hasPermission("juicy.spectate")) {
 
             e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             e.setKickMessage("Ошибка подключения - игра начата!");
