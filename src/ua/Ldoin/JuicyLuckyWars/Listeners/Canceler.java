@@ -56,6 +56,13 @@ public class Canceler implements Listener {
 
     }
 
+    @EventHandler
+    public void BlockSave(BlockExplodeEvent e) {
+
+        Arena.arena.getBlockStorage().addBlock(e.getBlock());
+
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onThunder(ThunderChangeEvent e) {
 
