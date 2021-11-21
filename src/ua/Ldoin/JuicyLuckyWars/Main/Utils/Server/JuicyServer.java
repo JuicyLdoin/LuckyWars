@@ -118,7 +118,7 @@ public class JuicyServer {
             servers.put(Bukkit.getMotd(), new JuicyServer(Bukkit.getMotd(), "enabled",
                     Bukkit.getOnlinePlayers().size() - Arena.arena.getSpectators().size(), Arena.arena.getMaxPlayers(), JuicyServerStates.WAITING, Arena.arena.getMap()));
 
-        ResultSet rs = Main.mysql.query("SELECT * FROM Servers");
+        ResultSet rs = Main.mysql.query("SELECT * FROM `servers`");
 
         if (rs == null)
             return;
